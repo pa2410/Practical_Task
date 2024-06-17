@@ -5,10 +5,13 @@ import colors from "../../utils/colors";
 import images from "../../utils/images";
 import validation from "../../utils/validation";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { login } from "../../features/authSlice";
 
 const Login = () => {
 
     const navigation = useNavigation<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [userName, setUsername] = useState<string>('abc@gmail.com');
     const [password, setPassword] = useState<string>('1234567');
@@ -37,6 +40,7 @@ const Login = () => {
         }
 
         if (isValid) {
+            dispatch(login({ name: userNameText }));
             navigation.navigate('Home');
         }
     }

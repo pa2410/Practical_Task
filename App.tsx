@@ -1,13 +1,13 @@
 import React from 'react';
-// import { Provider } from 'react-redux';
-// import Store from './src/store/store';
+import { Provider } from 'react-redux';
+import Store from './src/store/store';
 import AppNavigator from './src/navigator/AppNavigator';
 
 const App = () => {
   return (
-    // <Provider store={Store}>
+    <Provider store={Store}>
       <AppNavigator />
-    // </Provider>
+    </Provider>
   )
 }
 

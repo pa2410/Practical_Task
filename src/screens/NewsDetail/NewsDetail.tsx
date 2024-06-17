@@ -12,10 +12,17 @@ import {
 import images from '../../utils/images';
 import colors from '../../utils/colors';
 import ImageViewerComponent from '../../component/ImageViewer';
+import moment from 'moment';
 
 const NewsDetail = ({route, navigation}: any) => {
   const newsDetails = route?.params?.newsData;
   const [showImage, setImageView] = useState<boolean>(false);
+
+  const getDate = () => {
+    return newsDetails?.publishedAt
+      ? moment(newsDetails?.publishedAt).format('DD MMM YYYY')
+      : 'N/A';
+  };
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -73,10 +80,7 @@ const NewsDetail = ({route, navigation}: any) => {
               {newsDetails?.author ? newsDetails.author : 'N/A'}
             </Text>
             {newsDetails?.publishedAt && (
-              <Text style={styles.date}>
-                {'Date: ' +
-                  (newsDetails?.publishedAt ? newsDetails?.publishedAt : 'N/A')}
-              </Text>
+              <Text style={styles.date}>{'Date: ' + getDate()}</Text>
             )}
           </View>
         )}
