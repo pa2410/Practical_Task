@@ -2,7 +2,6 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import images from "../../utils/images";
 import colors from "../../utils/colors";
-import { useNavigation } from "@react-navigation/native";
 
 const NewsDetail = ({ route, navigation }: any) => {
 

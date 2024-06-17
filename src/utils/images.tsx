@@ -5,5 +5,6 @@ export default {
     search: require('../assets/search.png'),
     frame: require('../assets/Frame.png'),
     backImg: require('../assets/back.png'),
-    sendImg: require('../assets/send.png')
+    sendImg: require('../assets/send.png'),
+    emptyImg: require('../assets/emptyImg.jpeg')
 }

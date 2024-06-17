@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, FlatList, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import CustomTextInput from "../../component/InputBox";
 import images from "../../utils/images";
 import colors from "../../utils/colors";
@@ -9,7 +9,17 @@ import NewsItemComponent from "../../component/NewsItemComponent";
 const Home = () => {
 
     const [newsData, setNewsData] = useState<any[]>([]);
+    const [filteredData, setFilteredData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>('');
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            filterNewsData(search);
+        }, 1000);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [search]);
 
     useEffect(() => {
         fetchNewsData();
@@ -22,8 +32,10 @@ const Home = () => {
             console.log('response', JSON.stringify(response));
             if (response && response.status == 'ok' && response.articles?.length > 0) {
                 setNewsData(response?.articles);
+                setFilteredData(response.articles);
             } else {
                 setNewsData([]);
+                setFilteredData(response.articles);
             }
             setLoading(false);
         } catch (error) {
@@ -32,26 +44,44 @@ const Home = () => {
         }
     }
 
+    const filterNewsData = (searchText: string) => {
+        if (searchText) {
+            const filtered = newsData.filter(article =>
+                article.title.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setFilteredData(filtered);
+        } else {
+            setFilteredData(newsData); // Reset to all articles if search text is empty
+        }
+    };
+
     const renderNewsItems = useCallback(({ item, index }: any) => {
         return <NewsItemComponent item={item} index={index} />
     }, []);
 
     const renderNewsItemsSeperator = useCallback(({ item, index }: any) => {
         return (
-            <View style={{ backgroundColor: '#00000030', height: 0.5, margin: 15  }}>
-                
+            <View style={{ backgroundColor: '#00000030', height: 0.5, margin: 15 }}>
+
             </View>
         )
     }, []);
 
+    const searchOnChangeText = (val: string) => {
+        setSearch(val);
+    }
+
     return (
         <View style={styles.container}>
+            <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
             <View style={styles.rowContainer}>
                 <CustomTextInput
                     placeholder="Search news..."
                     leftImg={images.search}
                     inputStyle={styles.searchStyle}
                     placeHolderColor={colors.blueColorPrimary}
+                    onChangeText={(val: string) => searchOnChangeText(val)}
+                    value={search}
                 />
                 <TouchableOpacity style={styles.frameStyle}>
                     <Image

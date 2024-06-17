@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CustomTextInput from "../../component/InputBox";
 import colors from "../../utils/colors";
 import images from "../../utils/images";
@@ -43,6 +43,7 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
+            <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
             <View style={styles.mainContainer}>
                 <Image
                     source={images.BGLogin}
