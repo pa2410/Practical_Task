@@ -6,12 +6,12 @@ import images from "../utils/images";
 
 interface newsItemsPros {
     item: any;
-    index: number
+    index: number;
 }
 
 const NewsItemComponent = ({
     item,
-    index
+    index,
 }: newsItemsPros) => {
 
     const navigation = useNavigation<any>();

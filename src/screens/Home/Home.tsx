@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CustomTextInput from "../../component/InputBox";
 import images from "../../utils/images";
 import colors from "../../utils/colors";
 import { getData } from "../../utils/api";
 import NewsItemComponent from "../../component/NewsItemComponent";
+import moment from 'moment';
 
 const Home = () => {
 
@@ -12,6 +13,7 @@ const Home = () => {
     const [filteredData, setFilteredData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [search, setSearch] = useState<string>('');
+    const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -100,6 +102,10 @@ const Home = () => {
                     ItemSeparatorComponent={renderNewsItemsSeperator}
                 />
             }
+
+            <TouchableOpacity style={styles.signOutBtn}>
+                <Text style={styles.btnText}>Logout</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -128,6 +134,17 @@ const styles = StyleSheet.create({
     frameImg: {
         height: 22,
         width: 22,
+    },
+    signOutBtn: {
+        height: 50,
+        margin: 20,
+        backgroundColor: colors.blueColorPrimary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    btnText: {
+        fontSize: 16, color: 'white', fontWeight: 'bold'
     }
 })
 

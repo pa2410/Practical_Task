@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   Linking,
@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 import images from '../../utils/images';
 import colors from '../../utils/colors';
+import ImageViewerComponent from '../../component/ImageViewer';
 
 const NewsDetail = ({route, navigation}: any) => {
   const newsDetails = route?.params?.newsData;
-
+  const [showImage, setImageView] = useState<boolean>(false);
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -45,11 +46,17 @@ const NewsDetail = ({route, navigation}: any) => {
 
       <ScrollView>
         {newsDetails?.urlToImage ? (
-          <Image
-            source={{uri: newsDetails?.urlToImage}}
-            resizeMode="cover"
-            style={styles.imageStyle}
-          />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              setImageView(true);
+            }}>
+            <Image
+              source={{uri: newsDetails?.urlToImage}}
+              resizeMode="cover"
+              style={styles.imageStyle}
+            />
+          </TouchableOpacity>
         ) : (
           <View style={styles.imagePlaceHolderView}>
             <Image
@@ -75,6 +82,17 @@ const NewsDetail = ({route, navigation}: any) => {
         )}
         <Text style={styles.descText}>{newsDetails?.description}</Text>
       </ScrollView>
+      <ImageViewerComponent
+        onClose={() => {
+          setImageView(false);
+        }}
+        isVisible={showImage}
+        images={[
+          {
+            url: newsDetails?.urlToImage,
+          },
+        ]}
+      />
     </View>
   );
 };
