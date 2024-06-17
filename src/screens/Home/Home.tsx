@@ -55,11 +55,11 @@ const Home = () => {
   };
 
   const filterNewsData = () => {
-    const sortedData = newsData.sort((a, b) => {
-      const dateA = moment(a.publishedAt);
-      const dateB = moment(b.publishedAt);
-      return dateA - dateB;
+    setLoading(true);
+    const sortedData = newsData.sort(function (left, right) {
+      return moment.utc(left.publishedAt).diff(moment.utc(right.publishedAt));
     });
+    setLoading(false);
 
     setNewsData(sortedData);
   };
