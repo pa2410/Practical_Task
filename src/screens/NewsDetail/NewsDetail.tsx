@@ -44,12 +44,21 @@ const NewsDetail = ({route, navigation}: any) => {
       </View>
 
       <ScrollView>
-        <Image
-          source={{uri: newsDetails?.urlToImage}}
-          resizeMode="cover"
-          style={styles.imageStyle}
-        />
-
+        {newsDetails?.urlToImage ? (
+          <Image
+            source={{uri: newsDetails?.urlToImage}}
+            resizeMode="cover"
+            style={styles.imageStyle}
+          />
+        ) : (
+          <View style={styles.imagePlaceHolderView}>
+            <Image
+              source={images.emptyImg}
+              resizeMode="cover"
+              style={styles.imageStylePlaceHolder}
+            />
+          </View>
+        )}
         <Text style={styles.titleText}>{newsDetails?.title}</Text>
         {newsDetails?.publishedAt && newsDetails?.author && (
           <View style={styles.authorContainer}>
@@ -71,6 +80,19 @@ const NewsDetail = ({route, navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
+  imagePlaceHolderView: {
+    width: '93%',
+    aspectRatio: 357 / 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: colors.grey + '10',
+  },
+  imageStylePlaceHolder: {
+    width: 80,
+    height: 80,
+  },
+
   authorName: {
     fontWeight: '700',
     fontSize: 12,
