@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Image, Text, TextStyle } from 'react-native';
 import images from '../utils/images';
 
 interface CustomTextInputProps {
   icon?: any;
+  inputStyle?: TextStyle;
+  placeHolderColor?: string;
+  leftImg?: any;
   showEye?: boolean;
   placeholder?: string;
   value?: string;
@@ -13,6 +16,9 @@ interface CustomTextInputProps {
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
   icon,
+  leftImg,
+  inputStyle,
+  placeHolderColor,
   showEye,
   placeholder,
   value,
@@ -20,17 +26,31 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   errorText
 }) => {
 
-  const [eye, setEye] = useState<boolean>(true);
+  const [eye, setEye] = useState<boolean>(showEye ? true : false);
 
   const onIconPress = () => {
     setEye(!eye);
   }
-  
+
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.inputContainer}>
+        {leftImg &&
+          <TouchableOpacity style={styles.iconContainer} activeOpacity={0.99}>
+            <Image
+              source={leftImg}
+              resizeMode='contain'
+              style={{
+                height: 15,
+                width: 15,
+                tintColor: '#0F69F1'
+              }}
+            />
+          </TouchableOpacity>
+        }
         <TextInput
-          style={styles.input}
+          style={[styles.input, inputStyle]}
+          placeholderTextColor={placeHolderColor}
           placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
@@ -76,7 +96,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     height: 50,
-    width: 50,
+    width: 35,
     justifyContent: 'center',
     alignItems: 'center'
   },

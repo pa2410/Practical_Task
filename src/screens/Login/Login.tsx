@@ -4,29 +4,40 @@ import CustomTextInput from "../../component/InputBox";
 import colors from "../../utils/colors";
 import images from "../../utils/images";
 import validation from "../../utils/validation";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
 
-    const [userName, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const navigation = useNavigation<any>();
+
+    const [userName, setUsername] = useState<string>('abc@gmail.com');
+    const [password, setPassword] = useState<string>('1234567');
     const [userNameError, setUsernameError] = useState<string>('');
     const [passwordError, setPasswordError] = useState<string>('');
 
     const LoginHandler = () => {
         const userNameText = userName.trim();
         const passwordText = password.trim();
+        let isValid = true;
 
         if (userNameText === '') {
             setUsernameError('Please enter username.');
+            isValid = false;
         } else if (!validation.validateEmail(userNameText)) {
             setUsernameError('Please enter valid username');
+            isValid = false;
         } else {
             setUsernameError('');
         }
         if (passwordText === '') {
             setPasswordError('Please enter password.');
+            isValid = false;
         } else {
             setPasswordError('');
+        }
+
+        if (isValid) {
+            navigation.navigate('Home');
         }
     }
 
