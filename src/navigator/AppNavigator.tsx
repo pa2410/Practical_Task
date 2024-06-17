@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import RNBootSplash from 'react-native-bootsplash';
-import User from '../screens/User/User';
+import Login from '../screens/Login/Login';
 
 const Stack = createStackNavigator();
 
@@ -13,8 +13,8 @@ const AppNavigator = () => {
                 RNBootSplash.hide();
             }}
         >
-            <Stack.Navigator>
-                <Stack.Screen name='User' component={User} options={{ headerShown: true }} />
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )
